@@ -47,7 +47,7 @@ for pt in zip(*loc_right_filter[::-1]):
             buffer_x = pt[0]
             buffer_y = pt[1]
 
-print("右：" + str(right_filter))
+print("右-filter：" + str(right_filter))
 
 template_up_filter = cv2.imread('E:\\opencv_img\\up_filter.png', 0)
 w, h = template_up_filter.shape[::-1]
