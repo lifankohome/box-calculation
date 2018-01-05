@@ -3,7 +3,7 @@ import numpy as np
 
 cap = cv2.VideoCapture(0)
 
-arg = 37
+arg = 44
 
 highest_w = 0
 highest_h = 0
@@ -40,7 +40,7 @@ while True:
     #     print(str(639 - highest_w) + ',' + str(highest_h))
 
     res_filter = cv2.matchTemplate(canny, template, cv2.TM_CCOEFF_NORMED)
-    threshold = 0.445
+    threshold = 0.375
     loc_filter = np.where(res_filter >= threshold)
 
     buffer_x = buffer_y = 0
@@ -54,12 +54,15 @@ while True:
                 cv2.rectangle(frame, pt, (pt[0] + 40, pt[1] + 40), (0, 255, 0), 2)
                 buffer_x = pt[0]
                 buffer_y = pt[1]
-    distance = np.square(buffer_x - 20 - (639 - highest_w)) + np.square(buffer_y - 20 - highest_h)
+    distance = np.square(buffer_x + 40 - (639 - highest_w)) + np.square(buffer_y + 20 - highest_h)
+
+    dis_buf = np.round(np.sqrt(distance))
 
     distance = str(np.round(np.sqrt(distance)))
     # print(distance)
 
     cv2.putText(frame, 'Pixels Dis:' + distance, (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 1)
+    cv2.putText(frame, 'Delay:' + str(dis_buf * 2.35 + 136), (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 1)
     cv2.imshow('frame', frame)
     # cv2.imshow('b pass', b)
     # cv2.imshow("Canny", canny)
